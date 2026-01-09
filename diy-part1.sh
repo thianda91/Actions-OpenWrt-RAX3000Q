@@ -13,3 +13,18 @@
 # sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
 
+FILE="package/base-files/files/bin/config_generate"
+sed -i "/uci -q batch <<-EOF/a \\\tset system.@system[-1].hostname='xdaWrt'" "$FILE"
+
+
+cat > package/base-files/files/etc/banner << 'EOF'
+     _________                _       __        __      _   
+    /        /\     __  __ __| |  __ _\ \      / /_ __ | |_ 
+   /        /  \    \ \/ // _` | / _` |\ \ /\ / /| '__|| __|
+  /   xda  /    \    >  <| (_| || (_| | \ V  V / | |   | |_ 
+ /________/ xda  \  /_/\_\\__,_| \__,_|  \_/\_/  |_|    \__|
+ \        \  xda /
+  \        \    /  -------------------------------------------
+   \  xda   \  /    %D %V, %C
+    \________\/    -------------------------------------------
+EOF
