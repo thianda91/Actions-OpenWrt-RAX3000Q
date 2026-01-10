@@ -12,11 +12,10 @@
 # Uncomment a feed source
 # sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
+git clone https://github.com/gngpp/wg-quick package/network/utils/wg-quick --depth=1
 
 FILE="package/base-files/files/bin/config_generate"
 sed -i "/uci -q batch <<-EOF/a \\\tset system.@system[-1].hostname='xdaWrt'" "$FILE"
-
-
 cat > package/base-files/files/etc/banner << 'EOF'
      _________                _       __        __      _   
     /        /\     __  __ __| |  __ _\ \      / /_ __ | |_ 
@@ -27,4 +26,8 @@ cat > package/base-files/files/etc/banner << 'EOF'
   \        \    /  -------------------------------------------
    \  xda   \  /    %D %V, %C
     \________\/    -------------------------------------------
+
 EOF
+
+sed -i 's/ssid=ImmortalWrt/ssid=xdaWrt/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
+
