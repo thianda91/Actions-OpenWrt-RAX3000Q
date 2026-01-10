@@ -13,14 +13,14 @@ name: Build OpenWrt
 on:
   repository_dispatch:
   workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
-        type: boolean
-  schedule:
-    - cron: 0 8 * * 2
+  #   inputs:
+  #     ssh:
+  #       description: 'SSH connection to Actions'
+  #       required: false
+  #       default: 'false'
+  #       type: boolean
+  # schedule:
+  #   - cron: 0 8 * * 2
 
 env:
   REPO_URL: https://github.com/kkstone/immortalwrt-ipq50xx
@@ -131,12 +131,6 @@ jobs:
         rm -rf cdn.jsdelivr.net
         find feeds/packages/net/ddns-go -name index.html -exec rm {} \;    
 
-        rm -rf feeds/packages/net/frp
-        wget -r --no-parent https://cdn.jsdelivr.net/gh/immortalwrt/packages@master/net/frp/
-        cp -rf cdn.jsdelivr.net/gh/immortalwrt/packages@master/net/frp feeds/packages/net/frp/
-        rm -rf cdn.jsdelivr.net
-        find feeds/packages/net/frp -name index.html -exec rm {} \; 
-
         wget "https://www.dropbox.com/scl/fi/uccikbibj772c4sekzbk7/luci-app-turboacc.zip?rlkey=yzhkk0lfzhrthn8hbl1qt8k5j&st=31820445&dl=1" -O luci-app-turboacc.zip
         rm -rf feeds/luci/applications/luci-app-turboacc
         unzip luci-app-turboacc.zip -d feeds/luci/applications/
@@ -150,12 +144,12 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
-    - name: SSH connection to Actions
-      uses: P3TERX/ssh2actions@v1.0.0
-      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
-      env:
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+    # - name: SSH connection to Actions
+    #   uses: P3TERX/ssh2actions@v1.0.0
+    #   if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
+    #   env:
+    #     TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    #     TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
     - name: Fix some download failed first
       run: |
